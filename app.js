@@ -6,48 +6,44 @@ var makeRowMap = function(sampleRow) {
 	return Object.keys(sampleRow);
 };
 
-var makeHeaderRow = function(rowMap) {
-	var headerRow = document.createElement('tr');
+// Populate either kind of row - either header or just 'normal' data.
+var populateRow = function(cellType, rowMap, owner) {
+	var tableRow = document.createElement('tr');
 
 	for (var i = 0; i < rowMap.length; i++) {
-		var tableHeader = document.createElement('th');
-		tableHeader.innerHTML = rowMap[i];
-		headerRow.append(tableHeader);
+		var tableCell = document.createElement(cellType);
+		tableCell.innerHTML = owner ? owner[rowMap[i]] : rowMap[i];
+		tableRow.append(tableCell);
 	};
 
-	return ownerTable.append(headerRow);
+	return tableRow;
 };
 
-var makeTableRow = function(rowMap, ownerData) {
+var appendHeaderRow = function(rowMap) {
+	var headerRow = populateRow('th', rowMap);
+	ownerTable.append(headerRow);
+};
+
+var appendTableRows = function(rowMap, ownerData) {
 	for (var i = 0; i < ownerData.length; i++) {
-		var tableRow = document.createElement('tr');
-
-		for (var j = 0; j < rowMap.length; j++) {
-			var tableCell = document.createElement('td');
-			tableCell.innerHTML = ownerData[i][rowMap[j]];
-			tableRow.append(tableCell);
-		};
-
-		ownerTable.append(tableRow);
+		var dataRow = populateRow('td', rowMap, ownerData[i])
+		ownerTable.append(dataRow);
 	};
-
-	return undefined;
 };
 
+// Populate the rows and append them to the table in the DOM.
+// Passed as a callback to fetchOwnerData().
 var makeRows = function(ownerData) {
 	var rowMap = makeRowMap(ownerData[0]);
-	makeHeaderRow(rowMap, ownerData);
-	makeTableRow(rowMap, ownerData);
-	return undefined;
+	appendHeaderRow(rowMap);
+	appendTableRows(rowMap, ownerData);
 };
 
 var fetchOwnerData = function(callback) {
 	$.post('./get_all_owners.php', {}, function(ownerData) {
-		if (ownerData.length === 0) {
-			return [];
+		if (ownerData.length > 0) {
+			return callback(JSON.parse(ownerData));
 		}
-
-		return callback(JSON.parse(ownerData));
 	});
 };
 
