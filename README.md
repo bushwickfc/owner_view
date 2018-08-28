@@ -4,7 +4,7 @@ Just a single index page to give staff/owners a quick look at the data in the ow
 
 The script reads the `owner_view` table and renders it as an HTML table. The live app can be found at
 
-http://db.bushwickfoodcoop.org/tools/owner_view.html
+http://db.bushwickfoodcoop.org/tools/owner_view/index.html
 
 ## Requirements
 
