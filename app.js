@@ -19,24 +19,35 @@ var populateRow = function(cellType, rowKeys, owner) {
 	return tableRow;
 };
 
-var appendHeaderRow = function(rowKeys) {
+var makeHeader = function(rowKeys) {
+	var tableHead = document.createElement('thead');
 	var headerRow = populateRow('th', rowKeys);
-	ownerTable.append(headerRow);
+
+	tableHead.append(headerRow);
+
+	return tableHead;
 };
 
-var appendTableRows = function(rowKeys, ownerData) {
+var makeBody = function(rowKeys, ownerData) {
+	var tableBody = document.createElement('tbody');
+
 	for (var i = 0; i < ownerData.length; i++) {
 		var dataRow = populateRow('td', rowKeys, ownerData[i])
-		ownerTable.append(dataRow);
+		tableBody.append(dataRow);
 	};
+
+	return tableBody;
 };
 
 // Populate the rows and append them to the table in the DOM.
 // Passed as a callback to fetchOwnerData().
-var makeRows = function(ownerData) {
+var makeTableContent = function(ownerData) {
 	var rowKeys = makeRowKeys(ownerData[0]);
-	appendHeaderRow(rowKeys);
-	appendTableRows(rowKeys, ownerData);
+
+	return {
+		tableHeader: makeHeader(rowKeys),
+		tableBody: makeBody(rowKeys, ownerData),
+	}
 };
 
 // Sort the owners by last name.
@@ -51,15 +62,21 @@ var sortByLastName = function(a, b) {
 	return 0;
 };
 
+var makeTable = function(tableContent) {
+	ownerTable.append(tableContent.tableHeader)
+	ownerTable.append(tableContent.tableBody)
+}
+
 var fetchOwnerData = function(callback) {
 	$.post('./get_all_owners.php', {}, function(ownerData) {
 		if (ownerData.length > 0) {
 			var sortedOwnerData = JSON.parse(ownerData).sort(sortByLastName);
-			return callback(sortedOwnerData);
+			var tableContent = makeTableContent(sortedOwnerData);
+			return callback(tableContent);
 		}
 	});
 };
 
 $(document).ready(function() {
-	return fetchOwnerData(makeRows);
+	return fetchOwnerData(makeTable);
 });
