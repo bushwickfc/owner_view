@@ -1,26 +1,62 @@
-/* Adapted from https://www.w3schools.com/css/tryit.asp?filename=trycss_table_fancy */
+/* Adapted from https://codepen.io/daveoncode/pen/LNomBE */
 /* Montserrat font family matches current BFC homepage styling */
+html, body {
+  font-family: "Montserrat", Arial, Helvetica, sans-serif;
+}
+
+.container {
+  display: inline-block;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  height: 200px;
+  border-top: 41px solid transparent;
+  border-bottom: 41px solid transparent;
+}
+
 table {
-    font-family: "Montserrat", Arial, Helvetica, sans-serif;
-    border-collapse: collapse;
-}
-
-thead {
-    /*display: block;*/
-    /*width: 100%;*/
-    /*overflow: auto;*/
-}
-
-tbody {
-    /*display: block;*/
-    /*width: 100%;*/
-    /*height: 100%;*/
-    /*overflow: auto;*/
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%;
 }
 
 td, th {
-    border: 1px solid #7A7A7A;
-    padding: 8px;
+  border: 1px solid #7A7A7A;
+  padding: 8px;
+  border-bottom: 1px solid #fff;
+  padding: 10px;
+  white-space: nowrap;
+}
+
+thead tr th {
+  height: 0;
+  line-height: 0;
+  margin: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+  color: transparent;
+  border: none;
+  white-space: nowrap;
+}
+
+thead tr th div {
+  position: absolute;
+  color: #fff;
+  padding: 10px;
+  margin-left: -10px;
+  line-height: normal;
+  width: 100%;
+  z-index: 2;
+  text-align: left;
+  font-weight: bold;
+}
+
+thead tr th div {
+  border-left: 1px solid #000;
+  border-bottom: 1px solid #000;
+}
+
+thead tr th div {
+  top: 0;
 }
 
 tr:nth-child(even) {
@@ -31,10 +67,10 @@ tr:hover {
     background-color: #DDDDDD;
 }
 
-th {
-    padding-top: 12px;
-    padding-bottom: 12px;
-    text-align: left;
-    background-color: #4CAF50;
-    color: white;
+thead tr th div {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #4CAF50;
+  color: white;
 }

@@ -46,7 +46,15 @@ var populateRow = function(cellType, keys, owner) {
 	for (var i = 0; i < keys.length; i++) {
 		var tableCell = document.createElement(cellType);
 		tableCell.innerHTML = owner ? owner[keys[i].fieldName] : keys[i].displayName;
-		tableRow.append(tableCell);
+
+		if (cellType === 'th') {
+			var tableCellDiv = document.createElement('div');
+			tableCellDiv.innerHTML = tableCell.innerHTML;
+			tableCell.append(tableCellDiv);
+			tableRow.append(tableCell);
+		} else {
+			tableRow.append(tableCell);
+		};
 	};
 
 	return tableRow;
