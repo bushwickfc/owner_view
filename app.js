@@ -12,9 +12,9 @@ var fields = [
 	'equity_due',
 	'equity_delinquent',
 	'equity_current',
+	'equity_to_be_paid',
 	'hours_current',
 	'owner_price',
-	'equity_to_be_paid',
 	'plan_join_date',
 ];
 // Each rowKey has the field name and a prettified version of that name.
