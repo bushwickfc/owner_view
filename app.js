@@ -49,6 +49,9 @@ var populateRow = function(cellType, keys, owner) {
 		tableCell.innerHTML = owner ? owner[keys[i].fieldName] : keys[i].displayName;
 
 		if (cellType === 'th') {
+			// This code may seem a bit unusual - it results in an HTML element with seemingly duplicate data:
+			// <th>Text<div>Text</div></th>
+			// but this is some necessary trickery in order to get the scrolling table to look right.
 			var tableCellDiv = document.createElement('div');
 			tableCellDiv.innerHTML = tableCell.innerHTML;
 			tableCell.append(tableCellDiv);
