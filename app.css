@@ -10,7 +10,15 @@ html, body {
   overflow-x: hidden;
   height: 200px;
   border-top: 41px solid transparent;
-  border-bottom: 41px solid transparent;
+}
+
+/* This element's width property will be set via JS. */
+.wrapper {
+  position: relative;
+  border: 1px solid #000;
+  background: #efefef;
+  overflow: hidden;
+  border-radius: 7px;
 }
 
 table {

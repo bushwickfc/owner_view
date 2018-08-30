@@ -101,10 +101,20 @@ var sortByLastName = function(a, b) {
 	return 0;
 };
 
+// In order to create the custom styling needed to make the table scrollable with a fixed header
+// and still look good, need to set the .wrapper width based on the calculated width of its child, .container.
+var setCustomCSS = function() {
+	var container = document.getElementsByClassName('container')[0];
+	var containerWidth = window.getComputedStyle(container, null)['width'];
+	var wrapper = document.getElementsByClassName('wrapper')[0];
+	wrapper.style.width = containerWidth;
+};
+
 var makeTable = function(tableContent) {
-	ownerTable.append(tableContent.tableHeader)
-	ownerTable.append(tableContent.tableBody)
-}
+	ownerTable.append(tableContent.tableHeader);
+	ownerTable.append(tableContent.tableBody);
+	setCustomCSS();
+};
 
 var fetchOwnerData = function(callback) {
 	$.post('./get_all_owners.php', {}, function(ownerData) {
