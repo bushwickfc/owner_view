@@ -7,6 +7,7 @@ var fields = [
 	'email',
 	'pos_display',
 	'hour_balance',
+	'equity_type',
 	'equity_paid',
 	'equity_due',
 	'equity_delinquent',

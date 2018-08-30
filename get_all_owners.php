@@ -13,7 +13,10 @@ function connect($host, $dbname, $user, $password) {
 };
 
 function get_owner_data($conn) {
-	$results = pg_query($conn, "SELECT * FROM owner_view");
+	$results = pg_query($conn, "SELECT ov.*, oet.equity_type FROM owner_view AS ov
+								LEFT JOIN owner_equity_type AS oet
+								ON ov.email=oet.email");
+
 	return($results);
 };
 
