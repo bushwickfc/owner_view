@@ -1,39 +1,7 @@
 var ownerTable = $('table')[0];
-// The fields from the database, in the order that we want to display them.
-var fields = [
-	'owner_type_name',
-	'first_name',
-	'last_name',
-	'email',
-	'pos_display',
-	'hour_balance',
-	'equity_type',
-	'equity_paid',
-	'equity_due',
-	'equity_delinquent',
-	'equity_current',
-	'equity_to_be_paid',
-	'hours_current',
-	'owner_price',
-	'plan_join_date',
-];
-// Each rowKey has the field name and a prettified version of that name.
-// These keys are used to populate the header (using displayName) and the body
-// rows (grabbing the values out of each data row via the fieldName).
-var rowKeys = fields.map(function(field) {
-	return {
-		displayName: prettifyField(field),
-		fieldName: field,
-	}
-});
 
 // Remove underscores and capitalize the first letter of each word.
-// Since we're changing owner_type_name into Owner Type, just manually set that one.
 function prettifyField(field) {
-	if (field === 'owner_type_name') {
-		return 'Owner Type';
-	}
-
 	field = field.replace(/_/g, ' ');
 	return field.replace(/\w\S*/g, function(txt) {
 		return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
@@ -41,12 +9,12 @@ function prettifyField(field) {
 };
 
 // Populate either kind of row - either header or just 'normal' data.
-var populateRow = function(cellType, keys, owner) {
+var populateRow = function(cellType, rowKeys, owner) {
 	var tableRow = document.createElement('tr');
 
-	for (var i = 0; i < keys.length; i++) {
+	for (var i = 0; i < rowKeys.length; i++) {
 		var tableCell = document.createElement(cellType);
-		tableCell.innerHTML = owner ? owner[keys[i].fieldName] : keys[i].displayName;
+		tableCell.innerHTML = owner ? owner[rowKeys[i]] : prettifyField(rowKeys[i]);
 
 		if (cellType === 'th') {
 			// This code may seem a bit unusual - it results in an HTML element with seemingly duplicate data:
@@ -64,9 +32,9 @@ var populateRow = function(cellType, keys, owner) {
 	return tableRow;
 };
 
-var makeHeader = function(keys) {
+var makeHeader = function(rowKeys) {
 	var tableHead = document.createElement('thead');
-	var headerRow = populateRow('th', keys);
+	var headerRow = populateRow('th', rowKeys);
 
 	tableHead.append(headerRow);
 
@@ -84,9 +52,17 @@ var makeBody = function(rowKeys, ownerData) {
 	return tableBody;
 };
 
+// We can assume that all of the rows of data will have the same keys -
+// so grab a sample row and pull the keys off to be used in the table header and as a reference for the other rows.
+var makeRowKeys = function(sampleRow) {
+	return Object.keys(sampleRow);
+};
+
 // Populate the rows and append them to the table in the DOM.
 // Passed as a callback to fetchOwnerData().
 var makeTableContent = function(ownerData) {
+	var rowKeys = makeRowKeys(ownerData[0]);
+
 	return {
 		tableHeader: makeHeader(rowKeys),
 		tableBody: makeBody(rowKeys, ownerData),

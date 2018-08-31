@@ -12,8 +12,25 @@ function connect($host, $dbname, $user, $password) {
 	}
 };
 
+# Get most of the columns from the owner_view table, as well as the equity_type from owner_equity_type.
 function get_owner_data($conn) {
-	$results = pg_query($conn, "SELECT ov.*, oet.equity_type FROM owner_view AS ov
+	$results = pg_query($conn, "SELECT
+								ov.owner_type,
+								ov.first_name,
+								ov.last_name,
+								ov.email,
+								ov.pos_display,
+								ov.hour_balance,
+								oet.equity_type,
+								ov.equity_paid,
+								ov.equity_due,
+								ov.equity_delinquent,
+								ov.equity_current,
+								ov.equity_to_be_paid,
+								ov.hours_current,
+								ov.owner_price,
+								ov.plan_join_date
+								FROM owner_view AS ov
 								LEFT JOIN owner_equity_type AS oet
 								ON ov.email=oet.email");
 
