@@ -12,10 +12,10 @@ html, body {
   border-top: 41px solid transparent;
 }
 
-/* This element's width property will be set via JS. */
+/* This element's width property will be set via setCustomCSS() in app.js. */
 .wrapper {
   position: relative;
-  border: 1px solid #000;
+  border: 1px solid #000000;
   background: #efefef;
   overflow: hidden;
   border-radius: 7px;
@@ -30,7 +30,7 @@ table {
 td, th {
   border: 1px solid #7A7A7A;
   padding: 8px;
-  border-bottom: 1px solid #fff;
+  border-bottom: 1px solid #FFFFFF;
   padding: 10px;
   white-space: nowrap;
 }
@@ -59,8 +59,8 @@ thead tr th div {
 }
 
 thead tr th div {
-  border-left: 1px solid #000;
-  border-bottom: 1px solid #000;
+  border-left: 1px solid #7A7A7A;
+  border-bottom: 1px solid #7A7A7A;
 }
 
 thead tr th div {

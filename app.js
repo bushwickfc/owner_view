@@ -4,6 +4,11 @@ var ownerTable = $('table')[0];
 function prettifyField(field) {
 	field = field.replace(/_/g, ' ');
 	return field.replace(/\w\S*/g, function(txt) {
+		// 'pos' is an acronym for 'point of sale' - so uppercase the whole thing.
+		if (txt.match(/pos/)) {
+			return txt.toUpperCase();
+		}
+
 		return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
 	});
 };

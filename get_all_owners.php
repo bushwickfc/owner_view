@@ -20,6 +20,7 @@ function get_owner_data($conn) {
 								ov.last_name,
 								ov.email,
 								ov.pos_display,
+								ov.owner_price,
 								ov.hour_balance,
 								oet.equity_type,
 								ov.equity_paid,
@@ -28,7 +29,6 @@ function get_owner_data($conn) {
 								ov.equity_current,
 								ov.equity_to_be_paid,
 								ov.hours_current,
-								ov.owner_price,
 								ov.plan_join_date
 								FROM owner_view AS ov
 								LEFT JOIN owner_equity_type AS oet
